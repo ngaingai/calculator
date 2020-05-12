@@ -51,22 +51,28 @@ for (let i = 0; i < buttons.length; i++) {
                 num2 = displayValue;
             }
         }
-        else if (buttons[i].className === "operator" && gotNum1 === false) {
-            operator = e.target.id;    // Assign operator
+        else if (buttons[i].className === "operator" && gotNum1 === false) { // Make sure num1 is assigned
+            operator = e.target.id;                 // Assign operator
             display.textContent = '';               // Clear screen
-            gotNum1 = true;             // Start looking for num2
+            gotNum1 = true;                         // Start looking for num2
         }
-        else if (buttons[i].className === "equals") {
+        else if (buttons[i].className === "operator" && gotNum1 === true) { // "Loop" for continuous operations
+            result = operate(num1, operator, num2);     // Calculate running number
+            display.textContent = result;               // Display result
+            operator = e.target.id;                     // Assign next operator
+            num1 = result;                              // Pass on the current number
+            display.textContent = '';                   // Clear screen
+        }
+        else if (buttons[i].className === "equals") {   // Equals button
             result = operate(num1, operator, num2);
             display.textContent = result;
         }
-        else if (buttons[i].className === "clear") {
+        else if (buttons[i].className === "clear") {    // Clear button
             display.textContent = '';
             num1 = 0;
             num2 = 0;
             gotNum1 = false;
             result = 0;
         }
-
     });
 } // End for
